@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard AXAI</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f111a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+        h1 {
+            margin: 30px 0;
+            font-weight: 400;
+            color: #00ffe0;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+        .chart-container {
+            width: 90%;
+            max-width: 800px;
+            background: #1e1e2f;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 224, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Carteira AXAI - Distribuição de Ações</h1>
+    <div class="chart-container">
+        <canvas id="portfolioChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+
+        const gradientColors = [
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400),
+            ctx.createLinearGradient(0,0,0,400)
+        ];
+
+        // Definindo degradês
+        gradientColors[0].addColorStop(0, '#ff6384'); gradientColors[0].addColorStop(1, '#ff99aa');
+        gradientColors[1].addColorStop(0, '#36a2eb'); gradientColors[1].addColorStop(1, '#6ec0ff');
+        gradientColors[2].addColorStop(0, '#ffce56'); gradientColors[2].addColorStop(1, '#ffe88c');
+        gradientColors[3].addColorStop(0, '#4bc0c0'); gradientColors[3].addColorStop(1, '#81e6e6');
+        gradientColors[4].addColorStop(0, '#9966ff'); gradientColors[4].addColorStop(1, '#b58eff');
+        gradientColors[5].addColorStop(0, '#ff9f40'); gradientColors[5].addColorStop(1, '#ffb374');
+        gradientColors[6].addColorStop(0, '#66ff66'); gradientColors[6].addColorStop(1, '#99ff99');
+        gradientColors[7].addColorStop(0, '#ff66cc'); gradientColors[7].addColorStop(1, '#ff99dd');
+        gradientColors[8].addColorStop(0, '#66ffff'); gradientColors[8].addColorStop(1, '#99ffff');
+        gradientColors[9].addColorStop(0, '#ffd700'); gradientColors[9].addColorStop(1, '#ffee33');
+
+        const portfolioChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['ARM','NVDA','ANET','NET','AVGO','CRWD','NOW','TSM','DDOG','ASML'],
+                datasets: [{
+                    label: 'Peso (%)',
+                    data: [19.25,18.00,15.06,13.15,13.03,8.09,5.03,3.73,3.63,1.03],
+                    backgroundColor: gradientColors,
+                    borderRadius: 10,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#00ffe0',
+                        titleColor: '#0f111a',
+                        bodyColor: '#0f111a',
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#00ffe0', font: { size: 14 }},
+                        grid: { color: '#2c2c3c' }
+                    },
+                    y: {
+                        ticks: { color: '#00ffe0', font: { size: 14 }},
+                        grid: { color: '#2c2c3c' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
